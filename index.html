@@ -1,32 +1,34 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Clipp.ai - Corte automático para TikTok & YouTube</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>Clipp.ai</h1>
-    <p>Faça cortes automáticos no formato 9:16 para TikTok, YouTube Shorts e mais!</p>
+import express from "express";
+import cors from "cors";
+import fs from "fs";
 
-    <div id="info">
-      <p><strong>Cortes restantes:</strong> <span id="cortesRestantes">...</span></p>
-    </div>
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-    <div class="input-group">
-      <input type="text" id="inputLink" placeholder="Cole o link do vídeo aqui" />
-      <button id="btnEnviar">Gerar corte</button>
-    </div>
+// Habilita CORS para qualquer origem
+app.use(cors());
+app.use(express.json());
 
-    <div id="resultados"></div>
+// Mock database
+const dbPath = "./db.json";
 
-    <button id="btnGanharMais">Convide um amigo e ganhe +50 cortes</button>
+// Get cuts
+app.get("/cuts", (req, res) => {
+  fs.readFile(dbPath, (err, data) => {
+    if (err) return res.status(500).json({ error: "Erro ao ler o banco de dados." });
+    const cuts = JSON.parse(data);
+    res.json(cuts);
+  });
+});
 
-    <div id="mensagem"></div>
-  </div>
+// Register new cut
+app.post("/cuts", (req, res) => {
+  const newCut = req.body;
 
-  <script src="script.js"></script>
-</body>
-</html>
+  fs.readFile(dbPath, (err, data) => {
+    if (err) return res.status(500).json({ error: "Erro ao ler o banco de dados." });
+
+    const cuts = JSON.parse(data);
+    cuts.push(newCut);
+
+    fs.writeFile(dbPath, JSON.stringify(cuts, null, 2),
