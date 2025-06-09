@@ -1,4 +1,3 @@
-
 const API_URL = 'https://backend4-2vye.onrender.com/api';
 
 let usuario = null;
@@ -39,7 +38,11 @@ async function enviarVideo() {
     return;
   }
 
-  usuario = { ...usuario, cortesRestantes: usuario.cortesRestantes - 1, cortes: [...(usuario.cortes || []), data.corte] };
+  usuario = { 
+    ...usuario, 
+    cortesRestantes: usuario.cortesRestantes - 1, 
+    cortes: [...(usuario.cortes || []), data.corte] 
+  };
   atualizarCortesRestantes();
 
   mostrarResultado(data.corte);
@@ -54,8 +57,14 @@ function mostrarResultado(corte) {
 
   div.innerHTML = `
     <p><strong>Status:</strong> ${corte.status}</p>
-    <p><strong>Link original:</strong> <a href="${corte.linkOriginal}" target="_blank">${corte.linkOriginal}</a></p>
-    <p><strong>Vídeo cortado:</strong> ${corte.videoCortadoUrl ? `<a href="${corte.videoCortadoUrl}" target="_blank">Assista aqui</a>` : 'Processando...'}</p>
+    <p><strong>Link original:</strong> 
+      <a href="${corte.linkOriginal}" target="_blank">${corte.linkOriginal}</a>
+    </p>
+    <p><strong>Vídeo cortado:</strong> 
+      ${corte.videoCortadoUrl 
+        ? `<a href="${corte.videoCortadoUrl}" target="_blank">Assista aqui</a>` 
+        : 'Processando...'}
+    </p>
   `;
 
   container.prepend(div);
