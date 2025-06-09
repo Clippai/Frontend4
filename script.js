@@ -1,4 +1,4 @@
-const API_URL = 'https://backend4-2vye.onrender.com/api';
+const API_URL = 'https://backend4-2vye.onrender.com';
 
 let usuario = null;
 
@@ -12,7 +12,12 @@ async function criarUsuario() {
 }
 
 function atualizarCortesRestantes() {
-  document.getElementById('cortesRestantes').textContent = usuario.cortesRestantes;
+  fetch(`${API_URL}/cortes-restantes/${usuario.id}`)
+    .then(res => res.json())
+    .then(data => {
+      usuario.cortesRestantes = data.cortesRestantes;
+      document.getElementById('cortesRestantes').textContent = data.cortesRestantes;
+    });
 }
 
 async function enviarVideo() {
@@ -21,6 +26,7 @@ async function enviarVideo() {
     alert('Por favor, cole um link de vídeo.');
     return;
   }
+
   if (usuario.cortesRestantes <= 0) {
     alert('Você não tem mais cortes disponíveis. Convide amigos para ganhar mais!');
     return;
@@ -29,24 +35,20 @@ async function enviarVideo() {
   const res = await fetch(`${API_URL}/enviar-video`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ usuarioId: usuario.id, link }),
+    body: JSON.stringify({ userId: usuario.id, link }),
   });
+
   const data = await res.json();
 
-  if (data.erro) {
-    alert(data.erro);
+  if (data.error) {
+    alert(data.error);
     return;
   }
 
-  usuario = { 
-    ...usuario, 
-    cortesRestantes: usuario.cortesRestantes - 1, 
-    cortes: [...(usuario.cortes || []), data.corte] 
-  };
+  usuario.cortesRestantes--;
   atualizarCortesRestantes();
 
   mostrarResultado(data.corte);
-
   document.getElementById('inputLink').value = '';
 }
 
@@ -56,33 +58,16 @@ function mostrarResultado(corte) {
   div.className = 'corte';
 
   div.innerHTML = `
-    <p><strong>Status:</strong> ${corte.status}</p>
-    <p><strong>Link original:</strong> 
-      <a href="${corte.linkOriginal}" target="_blank">${corte.linkOriginal}</a>
-    </p>
-    <p><strong>Vídeo cortado:</strong> 
-      ${corte.videoCortadoUrl 
-        ? `<a href="${corte.videoCortadoUrl}" target="_blank">Assista aqui</a>` 
-        : 'Processando...'}
-    </p>
+    <p><strong>ID:</strong> ${corte.id}</p>
+    <p><strong>Link original:</strong> <a href="${corte.link}" target="_blank">${corte.link}</a></p>
+    <p><strong>Data:</strong> ${new Date(corte.data).toLocaleString()}</p>
   `;
 
   container.prepend(div);
 }
 
-async function ganharMaisCortes() {
-  const res = await fetch(`${API_URL}/ganhar-cortes`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ usuarioId: usuario.id }),
-  });
-  const data = await res.json();
-
-  if (data.mensagem) {
-    document.getElementById('mensagem').textContent = data.mensagem;
-    usuario.cortesRestantes = data.cortesRestantes;
-    atualizarCortesRestantes();
-  }
+function ganharMaisCortes() {
+  alert("Convide amigos pelo seu link! (Funcionalidade futura)");
 }
 
 document.getElementById('btnEnviar').addEventListener('click', enviarVideo);
