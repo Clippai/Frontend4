@@ -1,25 +1,29 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clipp.ai</title>
+  <title>Clipp.ai - Gerador de Cortes Automáticos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <header>
     <h1>Clipp.ai</h1>
-    <p>Cortes restantes: <span id="cortesRestantes">0</span></p>
+    <p>Gere cortes automáticos de vídeos com IA</p>
+  </header>
 
-    <input type="text" id="inputLink" placeholder="Cole o link do vídeo aqui" />
+  <main class="container">
+    <input id="inputLink" type="text" placeholder="Cole aqui o link do vídeo (YouTube, Twitch, TikTok...)" />
+    
     <button id="btnEnviar">Gerar corte</button>
     <button id="btnGanharMais">Ganhar mais cortes</button>
-
+    
+    <p id="cortesRestantes">Cortes restantes: ...</p>
     <p id="mensagem"></p>
 
+    <h2>Resultados</h2>
     <div id="resultados"></div>
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
