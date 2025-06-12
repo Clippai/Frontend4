@@ -1,22 +1,34 @@
-# Clipp.ai Frontend
+# ✂️ Clippai — Frontend
 
-Interface web simples para gerar cortes automáticos de vídeos no formato vertical (9:16) para TikTok, YouTube Shorts e similares.
-
----
-
-## 📁 Estrutura do Projeto
-
-* `index.html` – Página principal do site.
-* `style.css` – Estilos visuais da página.
-* `script.js` – Lógica de interação com o backend via API.
+Este é o frontend do projeto **Clippai**, uma ferramenta gratuita e inteligente que ajuda criadores de conteúdo a gerar cortes automáticos e virais de vídeos longos como lives, vídeos do YouTube, TikTok, Kwai etc.
 
 ---
 
-## 🚀 Como Rodar Localmente
+### 🚀 Funcionalidades
 
-1. Certifique-se de que o backend esteja rodando localmente.
-2. No arquivo `script.js`, altere a URL da API para:
+- Interface simples, leve e responsiva
+- Envio de links de vídeos (YouTube, TikTok, Twitch, Kwai)
+- Escolha de formatos: TikTok (9:16), YouTube (16:9), Instagram (1:1)
+- Adição de thumbnail e headline automaticamente (com opção de desmarcar)
+- Geração de cortes curtos com IA (via backend)
+- Controle de limite de cortes por usuário
+- Botão para “ganhar mais cortes” convidando amigos
+- Integração com o backend via API REST
 
-   ```js
-   const API_URL = 'http://localhost:3001/api';
-   ```
+---
+
+### 🧠 Stack utilizada
+
+- HTML + CSS + JavaScript
+- Fetch API para comunicação com backend
+- Hospedagem: [Render](https://render.com)
+
+---
+
+### 🔧 Como rodar localmente
+
+1. Clone este repositório:
+
+```bash
+git clone https://github.com/Clippai/Frontend4.git
+cd Frontend4
