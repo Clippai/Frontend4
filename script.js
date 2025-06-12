@@ -1,90 +1,61 @@
-const API_URL = 'https://backend4-2vye.onrender.com/api';
+const API_URL = 'https://backend4-2vye.onrender.com';
 let usuario = null;
 
-async function criarOuCarregarUsuario() {
-  const localUser = localStorage.getItem("usuario");
-  if (localUser) {
-    usuario = JSON.parse(localUser);
-    atualizarCortesRestantes();
-    return;
-  }
-
-  const res = await fetch(`${API_URL}/criar-usuario`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  });
-
+async function criarUsuario() {
+  const res = await fetch(`${API_URL}/criar-usuario`, { method: 'POST' });
   usuario = await res.json();
-  localStorage.setItem("usuario", JSON.stringify(usuario));
   atualizarCortesRestantes();
 }
 
 function atualizarCortesRestantes() {
-  const limite = 20 + (usuario.indicacoes || 0) * 40;
-  const usados = (usuario.cortes || []).filter(c => {
-    const data = new Date(c.data);
-    const agora = new Date();
-    return data.getMonth() === agora.getMonth() && data.getFullYear() === agora.getFullYear();
-  }).length;
-
-  document.getElementById('cortesRestantes').textContent = `Cortes restantes: ${limite - usados}`;
+  document.getElementById('cortesRestantes').textContent = usuario.cortesRestantes;
 }
 
 async function enviarVideo() {
   const link = document.getElementById('inputLink').value.trim();
-  if (!link) return alert('Cole um link de vídeo.');
+  if (!link) return alert('Cole o link do vídeo.');
+
+  if (usuario.cortesRestantes <= 0) {
+    return alert('Sem cortes disponíveis. Convide amigos!');
+  }
 
   const res = await fetch(`${API_URL}/enviar-video`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ usuarioId: usuario.id, link })
+    body: JSON.stringify({ userId: usuario.id, link }),
   });
-
   const data = await res.json();
-  if (data.erro) return alert(data.erro);
 
-  usuario.cortes = usuario.cortes || [];
-  usuario.cortes.push(data.corte);
-  localStorage.setItem("usuario", JSON.stringify(usuario));
+  if (data.error) {
+    return alert(data.error);
+  }
+
+  usuario.cortesRestantes--;
   atualizarCortesRestantes();
-  mostrarResultado(data.corte);
+  
+  const corte = data.corte;
+  mostrarResultado(corte);
+  document.getElementById('inputLink').value = '';
 }
 
 function mostrarResultado(corte) {
-  const container = document.getElementById("resultados");
-  const div = document.createElement("div");
-  div.className = "corte";
-  div.innerHTML = `
-    <p><strong>Link original:</strong> <a href="${corte.link}" target="_blank">${corte.link}</a></p>
-    <p><strong>Status:</strong> Corte registrado! (simulado)</p>
-  `;
-  container.prepend(div);
+  const c = corte;
+  const div = document.createElement('div');
+  div.className = 'corte';
+  div.innerHTML = `<p><strong>ID:</strong> ${c.id}</p>
+                   <p><strong>Link:</strong> <a href="${c.link}" target="_blank">${c.link}</a></p>
+                   <p><strong>Data:</strong> ${new Date(c.data).toLocaleString()}</p>`;
+  document.getElementById('resultados').prepend(div);
 }
 
 async function ganharMaisCortes() {
-  const codigo = prompt("Cole o código do seu amigo para ganhar mais cortes:");
-  if (!codigo) return;
-
-  const res = await fetch(`${API_URL}/ganhar-cortes`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ usuarioId: usuario.id, codigoConvite: codigo })
-  });
-
-  const data = await res.json();
-  if (data.erro) {
-    alert(data.erro);
-  } else {
-    alert(data.mensagem);
-    usuario.indicacoes = (usuario.indicacoes || 0) + 1;
-    localStorage.setItem("usuario", JSON.stringify(usuario));
-    atualizarCortesRestantes();
-  }
+  // Simula bônus por convidar
+  usuario.cortesRestantes += 50;
+  document.getElementById('mensagem').textContent = 'Você ganhou +50 cortes!';
+  atualizarCortesRestantes();
 }
 
-document.getElementById("btnEnviar").addEventListener("click", enviarVideo);
-document.getElementById("btnGanharMais").addEventListener("click", ganharMaisCortes);
+document.getElementById('btnEnviar').onclick = enviarVideo;
+document.getElementById('btnGanharMais').onclick = ganharMaisCortes;
 
-window.onload = () => {
-  criarOuCarregarUsuario();
-};
+window.onload = criarUsuario;
