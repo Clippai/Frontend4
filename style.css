@@ -107,17 +107,5 @@ h1 {
   border-radius: 6px;
   text-align: center;
 }
-.select-group {
-  margin-bottom: 20px;
-  color: #fff;
-}
 
-.select-group select {
-  width: 100%;
-  padding: 10px;
-  border-radius: 6px;
-  border: none;
-  font-size: 16px;
-  margin-top: 6px;
-}
 
