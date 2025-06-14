@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ClipAI - Corte Inteligente com IA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>ClipAI ✂️</h1>
+
+    <div class="input-group">
+      <input type="text" id="inputLink" placeholder="Cole o link do vídeo" />
+    </div>
+
+    <div class="format-group">
+      <label><input type="radio" name="format" value="9:16" checked /> TikTok (9:16)</label>
+      <label><input type="radio" name="format" value="16:9" /> YouTube (16:9)</label>
+      <label><input type="radio" name="format" value="1:1" /> Instagram (1:1)</label>
+    </div>
+
+    <div class="options">
+      <label><input type="checkbox" id="chkLegenda" /> Gerar legenda</label>
+      <label><input type="checkbox" id="chkThumbnail" /> Gerar thumbnail IA</label>
+      <label><input type="checkbox" id="chkEdicao" /> Edição mágica</label>
+    </div>
+
+    <button id="btnEnviar">Processar vídeo 🎥</button>
+
+    <div id="mensagem"></div>
+
+    <h2>Resultados</h2>
+    <div id="resultados"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
