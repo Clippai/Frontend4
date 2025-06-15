@@ -24,7 +24,7 @@ body {
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.125);
   width: 100%;
-  max-width: 480px;
+  max-width: 500px;
   padding: 24px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   color: white;
@@ -34,6 +34,12 @@ h1 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 1.8rem;
+}
+
+h2 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 1.4rem;
 }
 
 .input-group {
@@ -64,6 +70,7 @@ h1 {
   border-radius: 10px;
   cursor: pointer;
   transition: background 0.3s;
+  font-weight: 600;
 }
 
 .input-group button:hover {
@@ -114,7 +121,7 @@ h1 {
   background: rgba(255, 255, 255, 0.2);
   padding: 12px;
   border-radius: 10px;
-  border-left: 4px solid #00c6ff;
+  border-left: 5px solid #00c6ff;
 }
 
 .corte p {
