@@ -15,6 +15,14 @@ function atualizarCortesRestantes() {
   document.getElementById('cortesRestantes').textContent = usuario.cortesRestantes;
 }
 
+function mostrarLoading() {
+  document.getElementById('loading').style.display = 'block';
+}
+
+function esconderLoading() {
+  document.getElementById('loading').style.display = 'none';
+}
+
 async function enviarVideo() {
   const link = document.getElementById('inputLink').value.trim();
   if (!link) {
@@ -27,24 +35,34 @@ async function enviarVideo() {
     return;
   }
 
-  const res = await fetch(`${API_URL}/enviar-video`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ userId: usuario.id, link }),
-  });
-  const data = await res.json();
+  mostrarLoading();
 
-  if (data.error) {
-    alert(data.error);
-    return;
+  try {
+    const res = await fetch(`${API_URL}/enviar-video`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userId: usuario.id, link }),
+    });
+
+    const data = await res.json();
+    esconderLoading();
+
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
+
+    usuario.cortesRestantes--;
+    atualizarCortesRestantes();
+
+    const corte = data.corte;
+    mostrarResultado(corte);
+    document.getElementById('inputLink').value = '';
+
+  } catch (error) {
+    esconderLoading();
+    alert('Erro ao processar vídeo.');
   }
-
-  usuario.cortesRestantes--;
-  atualizarCortesRestantes();
-
-  const corte = data.corte;
-  mostrarResultado(corte);
-  document.getElementById('inputLink').value = '';
 }
 
 function mostrarResultado(corte) {
