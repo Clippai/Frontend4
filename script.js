@@ -1,55 +1,70 @@
 const API_URL = 'https://backend4-2vye.onrender.com';
 
-document.getElementById('btnEnviar').addEventListener('click', async () => {
-  const link = document.getElementById('inputLink').value.trim();
-  const format = document.querySelector('input[name="format"]:checked').value;
-  const gerarLegenda = document.getElementById('chkLegenda').checked;
-  const gerarThumb = document.getElementById('chkThumbnail').checked;
-  const edicaoMagica = document.getElementById('chkEdicao').checked;
+let usuario = null;
 
+async function criarUsuario() {
+  const res = await fetch(`${API_URL}/criar-usuario`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  usuario = await res.json();
+  atualizarCortesRestantes();
+}
+
+function atualizarCortesRestantes() {
+  document.getElementById('cortesRestantes').textContent = usuario.cortesRestantes;
+}
+
+async function enviarVideo() {
+  const link = document.getElementById('inputLink').value.trim();
   if (!link) {
     alert('Por favor, cole um link de vídeo.');
     return;
   }
 
-  document.getElementById('mensagem').textContent = '⏳ Processando...';
-
-  try {
-    const res = await fetch(`${API_URL}/api/processar-video`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        link,
-        formato: format,
-        legenda: gerarLegenda,
-        thumbnail: gerarThumb,
-        edicao: edicaoMagica
-      })
-    });
-
-    const data = await res.json();
-
-    if (data.erro) {
-      document.getElementById('mensagem').textContent = '❌ ' + data.erro;
-    } else {
-      document.getElementById('mensagem').textContent = '✅ Processado com sucesso!';
-      mostrarResultado(data);
-    }
-  } catch (e) {
-    document.getElementById('mensagem').textContent = '❌ Erro ao processar.';
+  if (usuario.cortesRestantes <= 0) {
+    alert('Você não tem mais cortes disponíveis. Convide amigos para ganhar mais!');
+    return;
   }
-});
 
-function mostrarResultado(data) {
-  const container = document.getElementById('resultados');
+  const res = await fetch(`${API_URL}/enviar-video`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userId: usuario.id, link }),
+  });
+  const data = await res.json();
+
+  if (data.error) {
+    alert(data.error);
+    return;
+  }
+
+  usuario.cortesRestantes--;
+  atualizarCortesRestantes();
+
+  const corte = data.corte;
+  mostrarResultado(corte);
+  document.getElementById('inputLink').value = '';
+}
+
+function mostrarResultado(corte) {
   const div = document.createElement('div');
   div.className = 'corte';
-
   div.innerHTML = `
-    <p><strong>Transcrição:</strong> ${data.transcricao || '---'}</p>
-    <p><strong>Corte Sugerido:</strong> ${data.corteSugerido || '---'}</p>
-    <p><strong>Arquivo:</strong> ${data.caminhoVideo || '---'}</p>
+    <p><strong>ID:</strong> ${corte.id}</p>
+    <p><strong>Link:</strong> <a href="${corte.link}" target="_blank">${corte.link}</a></p>
+    <p><strong>Data:</strong> ${new Date(corte.data).toLocaleString()}</p>
   `;
-
-  container.prepend(div);
+  document.getElementById('resultados').prepend(div);
 }
+
+function ganharMaisCortes() {
+  usuario.cortesRestantes += 40;
+  document.getElementById('mensagem').textContent = 'Você ganhou +40 cortes!';
+  atualizarCortesRestantes();
+}
+
+document.getElementById('btnEnviar').addEventListener('click', enviarVideo);
+document.getElementById('btnGanharMais').addEventListener('click', ganharMaisCortes);
+
+window.onload = criarUsuario;
