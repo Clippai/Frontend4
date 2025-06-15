@@ -5,26 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ClippAI - Editor Inteligente</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 
   <div class="container">
-    <h1>ClippAI - Editor de Vídeos Inteligente</h1>
+    <h1>🚀 <span class="logo">ClippAI</span></h1>
 
     <div class="input-group">
       <input type="text" id="inputLink" placeholder="Cole o link do vídeo (YouTube, Twitch, Kwai)">
-      <button id="btnEnviar">Gerar Corte</button>
+      <button id="btnEnviar">🎬 Gerar Corte</button>
     </div>
 
     <div class="status">
       <p><strong>Cortes restantes:</strong> <span id="cortesRestantes">...</span></p>
     </div>
 
-    <button id="btnGanharMais">Ganhar +40 Cortes (Convide um amigo)</button>
+    <button id="btnGanharMais">🎁 Ganhar +40 Cortes</button>
 
     <div id="mensagem"></div>
 
-    <h2>Resultados:</h2>
+    <div id="loading" style="display:none;">
+      <div class="loader"></div>
+      <p>Processando vídeo, por favor aguarde...</p>
+    </div>
+
+    <h2>📝 Resultados:</h2>
     <div id="resultados"></div>
   </div>
 
