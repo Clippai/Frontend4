@@ -1,36 +1,30 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ClipAI - Corte Inteligente com IA</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClippAI - Editor Inteligente</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="container">
-    <h1>ClipAI ✂️</h1>
+    <h1>ClippAI - Editor de Vídeos Inteligente</h1>
 
     <div class="input-group">
-      <input type="text" id="inputLink" placeholder="Cole o link do vídeo" />
+      <input type="text" id="inputLink" placeholder="Cole o link do vídeo (YouTube, Twitch, Kwai)">
+      <button id="btnEnviar">Gerar Corte</button>
     </div>
 
-    <div class="format-group">
-      <label><input type="radio" name="format" value="9:16" checked /> TikTok (9:16)</label>
-      <label><input type="radio" name="format" value="16:9" /> YouTube (16:9)</label>
-      <label><input type="radio" name="format" value="1:1" /> Instagram (1:1)</label>
+    <div class="status">
+      <p><strong>Cortes restantes:</strong> <span id="cortesRestantes">...</span></p>
     </div>
 
-    <div class="options">
-      <label><input type="checkbox" id="chkLegenda" /> Gerar legenda</label>
-      <label><input type="checkbox" id="chkThumbnail" /> Gerar thumbnail IA</label>
-      <label><input type="checkbox" id="chkEdicao" /> Edição mágica</label>
-    </div>
-
-    <button id="btnEnviar">Processar vídeo 🎥</button>
+    <button id="btnGanharMais">Ganhar +40 Cortes (Convide um amigo)</button>
 
     <div id="mensagem"></div>
 
-    <h2>Resultados</h2>
+    <h2>Resultados:</h2>
     <div id="resultados"></div>
   </div>
 
