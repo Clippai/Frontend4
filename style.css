@@ -1,75 +1,33 @@
-body {
-  background: #f4f4f4;
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  min-height: 100vh;
-  padding: 20px;
-}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClippAI - Editor Inteligente</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-.container {
-  background: #fff;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  width: 100%;
-  max-width: 500px;
-}
+  <div class="container">
+    <h1>ClippAI - Editor de Vídeos Inteligente</h1>
 
-h1 {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-}
+    <div class="input-group">
+      <input type="text" id="inputLink" placeholder="Cole o link do vídeo (YouTube, Twitch, Kwai)">
+      <button id="btnEnviar">Gerar Corte</button>
+    </div>
 
-.input-group input {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
+    <div class="status">
+      <p><strong>Cortes restantes:</strong> <span id="cortesRestantes">...</span></p>
+    </div>
 
-.format-group, .options {
-  margin-bottom: 16px;
-}
+    <button id="btnGanharMais">Ganhar +40 Cortes (Convide um amigo)</button>
 
-label {
-  display: block;
-  margin-bottom: 6px;
-  color: #444;
-}
+    <div id="mensagem"></div>
 
-button {
-  width: 100%;
-  padding: 12px;
-  background: #0077ff;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  cursor: pointer;
-}
+    <h2>Resultados:</h2>
+    <div id="resultados"></div>
+  </div>
 
-button:hover {
-  background: #005fcc;
-}
-
-#mensagem {
-  margin-top: 12px;
-  padding: 10px;
-  background: #e7f4e4;
-  border: 1px solid #a8e0a0;
-  border-radius: 6px;
-  color: #356c35;
-  text-align: center;
-}
-
-.corte {
-  background: #fafafa;
-  border-left: 4px solid #0077ff;
-  padding: 10px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
+  <script src="script.js"></script>
+</body>
+</html>
