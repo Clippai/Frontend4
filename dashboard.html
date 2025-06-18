@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClippAI - Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>🎬 ClippAI - Editor Inteligente</h1>
+    <p><strong>Cortes restantes:</strong> <span id="cortesRestantes">...</span></p>
+
+    <input type="text" id="inputLink" placeholder="Cole o link do vídeo (YouTube, Twitch, Kwai)">
+
+    <div class="formatos">
+      <button class="formato-btn" data-formato="9:16">9:16</button>
+      <button class="formato-btn" data-formato="16:9">16:9</button>
+      <button class="formato-btn" data-formato="1:1">1:1</button>
+    </div>
+
+    <button id="btnEnviar">🎬 Gerar Corte</button>
+    <button id="btnGanharMais">🚀 Ganhar +40 Cortes</button>
+
+    <div id="mensagem"></div>
+
+    <h2>Resultados:</h2>
+    <div id="resultados"></div>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
