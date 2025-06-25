@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ClippAI - Login</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="container login-container">
+    <h1>🔐 ClippAI - Login</h1>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="senha" placeholder="Senha" />
+    <button onclick="login()">Entrar</button>
+    <p>Não tem conta? <a href="#" onclick="mostrarCadastro()">Cadastre-se</a></p>
+  </div>
+
+  <div class="container cadastro-container" style="display:none;">
+    <h1>📝 Cadastro</h1>
+    <input type="email" id="emailCadastro" placeholder="Email" />
+    <input type="password" id="senhaCadastro" placeholder="Senha" />
+    <button onclick="cadastrar()">Cadastrar</button>
+    <p>Já tem conta? <a href="#" onclick="mostrarLogin()">Fazer Login</a></p>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
