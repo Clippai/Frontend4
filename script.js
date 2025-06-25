@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:10000'; // Altere para seu backend online se necessário
+const API_URL = https://backend4-2vye.onrender.com // Altere para seu backend online se necessário
 
 function mostrarCadastro() {
   document.querySelector('.login-container').style.display = 'none';
