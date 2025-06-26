@@ -1,0 +1,16 @@
+# Ignorar arquivos de sistema
+.DS_Store
+Thumbs.db
+
+# Configurações de IDEs
+.vscode/
+*.log
+
+# Caches ou builds (caso use futuramente)
+dist/
+build/
+
+# Backups e arquivos temporários
+*.bak
+*.tmp
+*.swp
