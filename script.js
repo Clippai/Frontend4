@@ -1,11 +1,14 @@
-const API_URL = 'https://backend4-2vye.onrender.com'; // Altere para seu backend real
+const API_URL = 'https://backend4-2vye.onrender.com'; // Altere aqui para sua URL de backend
 
 function mostrarCadastro() {
-  document.querySelector('.card').style.display = 'none';
+  // Esconde o formulário de login
+  document.querySelector('.login-container').style.display = 'none';
+  // Mostra o formulário de cadastro
   document.getElementById('cadastro').style.display = 'block';
 }
 
 function mostrarLogin() {
+  // Recarrega a página para voltar ao login
   location.reload();
 }
 
@@ -20,9 +23,10 @@ async function cadastrar() {
   });
 
   const data = await res.json();
-  if (data.error) alert(data.error);
-  else {
-    alert('Cadastro feito com sucesso! Faça login.');
+  if (data.error) {
+    alert(data.error);
+  } else {
+    alert('✅ Cadastro feito com sucesso! Faça login.');
     mostrarLogin();
   }
 }
@@ -38,13 +42,15 @@ async function login() {
   });
 
   const data = await res.json();
-  if (data.error) alert(data.error);
-  else {
+  if (data.error) {
+    alert(data.error);
+  } else {
     localStorage.setItem('userId', data.user.id);
     window.location.href = 'dashboard.html';
   }
 }
 
+// Se estiver na dashboard, ativa os eventos
 if (window.location.pathname.includes('dashboard.html')) {
   const userId = localStorage.getItem('userId');
   if (!userId) window.location.href = 'index.html';
@@ -58,7 +64,7 @@ if (window.location.pathname.includes('dashboard.html')) {
 
   document.getElementById('btnEnviar').onclick = async () => {
     const link = document.getElementById('inputLink').value.trim();
-    if (!link) return alert('Cole um link');
+    if (!link) return alert('❗ Cole um link válido');
 
     const res = await fetch(`${API_URL}/enviar-video`, {
       method: 'POST',
@@ -68,6 +74,7 @@ if (window.location.pathname.includes('dashboard.html')) {
 
     const data = await res.json();
     if (data.error) return alert(data.error);
+
     mostrarCorte(data.corte);
     const atual = document.getElementById('cortesRestantes');
     atual.textContent = parseInt(atual.textContent) - 1;
