@@ -1,14 +1,11 @@
-const API_URL = 'https://backend4-2vye.onrender.com'; // Altere aqui para sua URL de backend
+const API_URL = 'https://backend4-2vye.onrender.com'; // Troque para seu backend real
 
 function mostrarCadastro() {
-  // Esconde o formulário de login
   document.querySelector('.login-container').style.display = 'none';
-  // Mostra o formulário de cadastro
   document.getElementById('cadastro').style.display = 'block';
 }
 
 function mostrarLogin() {
-  // Recarrega a página para voltar ao login
   location.reload();
 }
 
@@ -50,7 +47,6 @@ async function login() {
   }
 }
 
-// Se estiver na dashboard, ativa os eventos
 if (window.location.pathname.includes('dashboard.html')) {
   const userId = localStorage.getItem('userId');
   if (!userId) window.location.href = 'index.html';
